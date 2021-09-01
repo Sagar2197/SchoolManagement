@@ -11,11 +11,13 @@ using SchoolManagement.Models;
 
 namespace SchoolManagement.Controllers
 {
+    [Authorize(Roles ="Teacher")]
     public class StudentsController : Controller
     {
         private SchoolManagement_DBEntities db = new SchoolManagement_DBEntities();
 
         // GET: Students
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
             return View(await db.Students.ToListAsync());
@@ -47,7 +49,7 @@ namespace SchoolManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "StudentID,LastName,FirstName,EnrollmentDate")] Student student)
+        public async Task<ActionResult> Create([Bind(Include = "StudentID,LastName,FirstName,EnrollmentDate,MiddleName")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +81,7 @@ namespace SchoolManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "StudentID,LastName,FirstName,EnrollmentDate")] Student student)
+        public async Task<ActionResult> Edit([Bind(Include = "StudentID,LastName,FirstName,EnrollmentDate,MiddleName")] Student student)
         {
             if (ModelState.IsValid)
             {

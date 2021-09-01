@@ -5,8 +5,8 @@
       <PropertyRef Name="CourseID" />
     </Key>
     <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="50" />
-    <Property Name="Credits" Type="int" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Credits" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Enrollment">
     <Key>
@@ -16,15 +16,26 @@
     <Property Name="Grade" Type="float" />
     <Property Name="CourseID" Type="int" Nullable="false" />
     <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="LecturerID" Type="int" />
+  </EntityType>
+  <EntityType Name="Lecturers">
+    <Key>
+      <PropertyRef Name="LecturerID" />
+    </Key>
+    <Property Name="LecturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Last Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Student">
     <Key>
       <PropertyRef Name="StudentID" />
     </Key>
     <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-    <Property Name="EnrollmentDate" Type="datetime" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EnrollmentDate" Type="datetime" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_Enrollment_dbo_Course_CourseID">
     <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -37,6 +48,20 @@
       </Principal>
       <Dependent Role="Enrollment">
         <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Enrollment_dbo_Lecturer_LecturerID">
+    <End Role="Lecturers" Type="Self.Lecturers" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecturers">
+        <PropertyRef Name="LecturerID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="LecturerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -57,9 +82,14 @@
   <EntityContainer Name="SchoolManagement_DBModelStoreContainer">
     <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lecturers" EntityType="Self.Lecturers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_Enrollment_dbo_Course_CourseID" Association="Self.FK_dbo_Enrollment_dbo_Course_CourseID">
       <End Role="Course" EntitySet="Course" />
+      <End Role="Enrollment" EntitySet="Enrollment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Enrollment_dbo_Lecturer_LecturerID" Association="Self.FK_dbo_Enrollment_dbo_Lecturer_LecturerID">
+      <End Role="Lecturers" EntitySet="Lecturers" />
       <End Role="Enrollment" EntitySet="Enrollment" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_Enrollment_dbo_Student_StudentID" Association="Self.FK_dbo_Enrollment_dbo_Student_StudentID">
