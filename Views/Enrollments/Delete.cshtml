@@ -7,7 +7,7 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3 class="alert alert-danger">Are you sure you want to delete this?</h3>
 <div>
     <h4>Enrollment</h4>
     <hr />
@@ -29,11 +29,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Student.LastName)
+            @Html.DisplayNameFor(model => model.Student.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Student.LastName)
+            @Html.DisplayFor(model => model.Student.FirstName)
         </dd>
 
         <dt>

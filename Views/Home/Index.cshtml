@@ -49,14 +49,18 @@
         <p>
             Use this option to view all course and offerings at this institution.
         </p>
-        <p>@Html.ActionLink("Learn More","Index","Courses", new { @class = "btn btn-info" })</p>
+        @*<p>@Html.ActionLink("Learn More","Index","Courses", new { @class = "btn btn-info" })</p>*@
+         @Html.ActionLink("All Courses", "Index", "Courses")
+       
     </div>
     <div class="col-md-6">
         <h2>Students</h2>
         <p>
             View all students that are enrolled at this institution.
         </p>
-        <p>@Html.ActionLink("All Students", "Index", "Students", new { @class = "btn btn-info" })</p>
+        @*<p>@Html.ActionLink("All Students", "Index", "Students", new { @class = "btn btn-info" })</p>*@
+        @Html.ActionLink("All Students", "Index", "Students")
+        
     </div>
     
 </div>

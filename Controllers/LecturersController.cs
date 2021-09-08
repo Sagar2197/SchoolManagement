@@ -14,13 +14,13 @@ namespace SchoolManagement.Controllers
     public class LecturersController : Controller
     {
         private SchoolManagement_DBEntities db = new SchoolManagement_DBEntities();
-
+        [AllowAnonymous]
         // GET: Lecturers
         public async Task<ActionResult> Index()
         {
             return View(await db.Lecturers.ToListAsync());
         }
-
+        [AllowAnonymous]
         // GET: Lecturers/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -35,7 +35,7 @@ namespace SchoolManagement.Controllers
             }
             return View(lecturer);
         }
-
+        [Authorize]
         // GET: Lecturers/Create
         public ActionResult Create()
         {
@@ -58,7 +58,7 @@ namespace SchoolManagement.Controllers
 
             return View(lecturer);
         }
-
+        [Authorize]
         // GET: Lecturers/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -89,7 +89,7 @@ namespace SchoolManagement.Controllers
             }
             return View(lecturer);
         }
-
+        [Authorize]
         // GET: Lecturers/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {

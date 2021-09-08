@@ -22,7 +22,7 @@ namespace SchoolManagement.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Address";
 
             return View();
         }

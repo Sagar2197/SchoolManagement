@@ -14,14 +14,14 @@ namespace SchoolManagement.Controllers
     public class EnrollmentsController : Controller
     {
         private SchoolManagement_DBEntities db = new SchoolManagement_DBEntities();
-
+        [AllowAnonymous]
         // GET: Enrollments
         public async Task<ActionResult> Index()
         {
             var enrollments = db.Enrollments.Include(e => e.Course).Include(e => e.Student).Include(e => e.Lecturer);
             return View(await enrollments.ToListAsync());
         }
-
+        [AllowAnonymous]
         // GET: Enrollments/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -36,12 +36,12 @@ namespace SchoolManagement.Controllers
             }
             return View(enrollment);
         }
-
+        [Authorize]
         // GET: Enrollments/Create
         public ActionResult Create()
         {
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title");
-            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName");
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "FirstName");
             ViewBag.LecturerID = new SelectList(db.Lecturers, "LecturerID", "First_Name");   
             return View();
         }
@@ -61,11 +61,11 @@ namespace SchoolManagement.Controllers
             }
 
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);
-            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName", enrollment.StudentID);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "FirstName", enrollment.StudentID);
             ViewBag.LecturerID = new SelectList(db.Lecturers, "LecturerID", "First_Name", enrollment.LecturerID);
             return View(enrollment);
         }
-
+        [Authorize]
         // GET: Enrollments/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -79,7 +79,7 @@ namespace SchoolManagement.Controllers
                 return HttpNotFound();
             }
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);
-            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName", enrollment.StudentID);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "FirstName", enrollment.StudentID);
             ViewBag.LecturerID = new SelectList(db.Lecturers, "LecturerID", "First_Name", enrollment.LecturerID);
             return View(enrollment);
         }
@@ -98,10 +98,11 @@ namespace SchoolManagement.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CourseID = new SelectList(db.Courses, "CourseID", "Title", enrollment.CourseID);
-            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "LastName", enrollment.StudentID);
+            ViewBag.StudentID = new SelectList(db.Students, "StudentID", "FirstName", enrollment.StudentID);
             ViewBag.LecturerID = new SelectList(db.Lecturers, "LecturerID", "First_Name", enrollment.LecturerID);
             return View(enrollment);
         }
+        [Authorize]
 
         // GET: Enrollments/Delete/5
         public async Task<ActionResult> Delete(int? id)

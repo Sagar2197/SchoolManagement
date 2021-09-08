@@ -10,17 +10,19 @@ using SchoolManagement.Models;
 
 namespace SchoolManagement.Controllers
 {
-    [Authorize]
+
     public class CoursesController : Controller
     {
         private SchoolManagement_DBEntities db = new SchoolManagement_DBEntities();
 
+        [AllowAnonymous]
         // GET: Courses
         public ActionResult Index()
         {
             return View(db.Courses.ToList());
         }
 
+        [AllowAnonymous]
         // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,6 +38,7 @@ namespace SchoolManagement.Controllers
             return View(course);
         }
 
+        [Authorize]
         // GET: Courses/Create
         public ActionResult Create()
         {
@@ -47,7 +50,7 @@ namespace SchoolManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,Title,Credits")] Course course)
+        public ActionResult Create([Bind(Include = "CourseId,Title,Credits")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +62,7 @@ namespace SchoolManagement.Controllers
             return View(course);
         }
 
+        [Authorize]
         // GET: Courses/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -79,7 +83,7 @@ namespace SchoolManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseID,Title,Credits")] Course course)
+        public ActionResult Edit([Bind(Include = "CourseId,Title,Credits")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +94,7 @@ namespace SchoolManagement.Controllers
             return View(course);
         }
 
+        [Authorize]
         // GET: Courses/Delete/5
         public ActionResult Delete(int? id)
         {
